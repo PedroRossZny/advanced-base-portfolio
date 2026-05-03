@@ -1,26 +1,75 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --fundo-principal: #ced1d8;
+    --fundo-card: #ebebf0;
+    --texto: #1f2937;
+    --texto-inverso: #ffffff;
+    --texto-mutado: #6b7280;
+    --destaque: #2563eb; 
+    --borda: #a8acb4;
+  }
+
+  /* A classe .dark será injetada automaticamente pelo next-themes depois */
+  .dark {
+    --fundo-principal: #0c111b;
+    --fundo-card: #171e29;
+    --texto: #f9fafb;
+    --texto-inverso: #0b101a;
+    --texto-mutado: #9ca3af;
+    --destaque: #3b82f6;
+    --borda: #374151;
+  }
+}
+
+@layer utilities {
+  @keyframes pulsarGlow {
+    0% { transform: scale(0.8); opacity: 0.1; }
+    100% { transform: scale(1.2); opacity: 0.25; }
+  }
+  @keyframes girarLoader {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  @keyframes girarLoaderInverso {
+    0% { transform: rotate(360deg); }
+    100% { transform: rotate(0deg); }
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 400;
+  background-color: var(--fundo-principal);
+  color: var(--texto);
+  transition: background-color 0.4s, color 0.4s;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-poppins), sans-serif;
+  font-weight: 700;
+}
+
+/* Customização da Barra de Rolagem Interna */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--borda);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--texto-mutado);
 }
