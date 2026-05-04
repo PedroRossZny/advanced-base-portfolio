@@ -12,7 +12,6 @@ import { defaultLocale, localeStorageKey, messages, supportedLocales, type Local
 
 interface LanguageContextValue {
   locale: Locale;
-  setLocale: (locale: Locale) => void;
   toggleLocale: () => void;
   t: (key: string, values?: Record<string, string | number>) => string;
 }
@@ -98,7 +97,6 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const value = useMemo<LanguageContextValue>(
     () => ({
       locale,
-      setLocale: setClientLocale,
       toggleLocale: () => {
         setClientLocale(locale === "pt" ? "en" : "pt");
       },

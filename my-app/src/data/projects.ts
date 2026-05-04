@@ -1,28 +1,15 @@
-export interface ProjectLink {
-  href: string;
-  icon: "github" | "youtube" | "instagram" | "tiktok" | "mail" | "star";
-  label?: string;
-  labelKey?: string;
-  className: string;
-  download?: boolean;
-}
-
 export interface ProjectTechGroup {
   titleKey: string;
   items: string[];
 }
 
 export interface ProjectSection {
-  type: "content" | "links" | "download" | "tech";
+  type: "content" | "tech";
   headingKey?: string;
   headingStyle?: "default" | "bordered" | "spaced";
   paragraphKeys?: string[];
   listKeys?: string[];
-  videoSrc?: string;
-  links?: ProjectLink[];
-  titleKey?: string;
   descriptionKey?: string;
-  href?: string;
   techGroups?: ProjectTechGroup[];
   fillLastRow?: boolean;
 }

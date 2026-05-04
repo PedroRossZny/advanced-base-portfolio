@@ -16,7 +16,7 @@ import Image from "next/image";
 import { useLanguage } from "@/components/LanguageProvider";
 
 interface ProjectCardProps {
-  projectId?: string;
+  projectId: string;
   title: string;
   summary: string;
   imageSrc: string;
@@ -43,15 +43,6 @@ const MOBILE_SCROLL_BREAKPOINT = 1050;
 const MOBILE_SCROLL_OFFSET = 15;
 const DESKTOP_SCROLL_OFFSET = 20;
 const EXPAND_SCROLL_DELAY_MS = 50;
-
-function buildProjectId(title: string) {
-  return title
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
 
 function scrollProjectIntoView(element: HTMLElement, behavior: ScrollBehavior, extraTopOffset = 0) {
   const detailsElement = document.getElementById("detalhes");
@@ -139,7 +130,6 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   const { t } = useLanguage();
   const prefersReducedMotion = useReducedMotion();
-  const stableProjectId = useMemo(() => projectId ?? buildProjectId(title), [projectId, title]);
   const cardRef = useRef<HTMLElement | null>(null);
   const toggleAreaRef = useRef<HTMLDivElement | null>(null);
   const pendingScrollRef = useRef(false);
@@ -157,18 +147,18 @@ export default function ProjectCard({
   }, []);
 
   useEffect(() => {
-    registerProject(stableProjectId);
+    registerProject(projectId);
 
     return () => {
       clearPendingScroll();
-      unregisterProject(stableProjectId);
+      unregisterProject(projectId);
     };
-  }, [clearPendingScroll, registerProject, stableProjectId, unregisterProject]);
+  }, [clearPendingScroll, projectId, registerProject, unregisterProject]);
 
   const techTokens = techs.split(/\s+/).filter(Boolean);
   const isVisible = !activeFilter || techTokens.includes(activeFilter);
-  const expandedIndex = expandedOrder.indexOf(stableProjectId);
-  const baseIndex = projectOrder.indexOf(stableProjectId);
+  const expandedIndex = expandedOrder.indexOf(projectId);
+  const baseIndex = projectOrder.indexOf(projectId);
   const isExpanded = expandedIndex !== -1;
   const visualOrder = isExpanded
     ? expandedIndex
@@ -177,7 +167,7 @@ export default function ProjectCard({
   const handleToggle = () => {
     const nextExpandedState = !isExpanded;
     clearPendingScroll();
-    toggleProject(stableProjectId);
+    toggleProject(projectId);
 
     if (!nextExpandedState || !cardRef.current) {
       return;

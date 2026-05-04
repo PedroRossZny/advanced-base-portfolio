@@ -1,9 +1,8 @@
 "use client";
 
-import { Mail, Wrench } from "lucide-react";
-import { FaFilePdf, FaGithub, FaInstagram, FaStar, FaTiktok, FaYoutube } from "react-icons/fa6";
+import { Wrench } from "lucide-react";
 import { useLanguage } from "@/components/LanguageProvider";
-import { projects, type ProjectLink, type ProjectSection } from "@/data/projects";
+import { projects, type ProjectSection } from "@/data/projects";
 import ProjectCard, { ProjectCardsProvider } from "./ProjectCard";
 
 interface ProjectsSectionProps {
@@ -28,24 +27,6 @@ function getHeadingClassName(style?: ProjectSection["headingStyle"]) {
   return baseClassName;
 }
 
-function ProjectLinkIcon({ icon }: Pick<ProjectLink, "icon">) {
-  switch (icon) {
-    case "youtube":
-      return <FaYoutube size={18} />;
-    case "instagram":
-      return <FaInstagram size={18} />;
-    case "tiktok":
-      return <FaTiktok size={18} />;
-    case "mail":
-      return <Mail size={18} />;
-    case "star":
-      return <FaStar size={18} />;
-    case "github":
-    default:
-      return <FaGithub size={18} />;
-  }
-}
-
 export default function ProjectsSection({
   activeFilter,
   filterName,
@@ -54,107 +35,28 @@ export default function ProjectsSection({
   const { t } = useLanguage();
   const html = (key: string) => ({ __html: t(key) });
 
-  const renderContentSection = (section: ProjectSection, projectTitle: string) => {
-    const hasMedia = Boolean(section.videoSrc);
+  const renderContentSection = (section: ProjectSection, projectTitle: string) => (
+    <section className="mb-6" key={`${projectTitle}-${section.headingKey ?? "content"}`}>
+      {section.headingKey ? (
+        <h4 className={getHeadingClassName(section.headingStyle)}>{t(section.headingKey)}</h4>
+      ) : null}
 
-    return (
-      <section className="mb-6" key={`${projectTitle}-${section.headingKey ?? "content"}`}>
-        {section.headingKey ? (
-          <h4 className={getHeadingClassName(section.headingStyle)}>{t(section.headingKey)}</h4>
-        ) : null}
-
-        {hasMedia ? (
-          <div className="block">
-            <div className="mb-4 aspect-video overflow-hidden rounded-xl border border-(--borda) shadow-lg lg:float-right lg:mb-4 lg:ml-6 lg:w-105">
-              <iframe
-                className="h-full w-full"
-                src={section.videoSrc}
-                title={projectTitle}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              />
-            </div>
-
-            {section.paragraphKeys?.map((key) => (
-              <p
-                key={key}
-                className="mb-2.5 leading-relaxed"
-                dangerouslySetInnerHTML={html(key)}
-              />
-            ))}
-
-            {section.listKeys ? (
-              <ul className="mb-2.5 ml-6 list-disc space-y-1 text-(--texto) leading-relaxed">
-                {section.listKeys.map((key) => (
-                  <li key={key} dangerouslySetInnerHTML={html(key)} />
-                ))}
-              </ul>
-            ) : null}
-
-            <div className="clear-both" />
-          </div>
-        ) : (
-          <>
-            {section.paragraphKeys?.map((key) => (
-              <p
-                key={key}
-                className="mb-2.5 leading-relaxed"
-                dangerouslySetInnerHTML={html(key)}
-              />
-            ))}
-
-            {section.listKeys ? (
-              <ul className="ml-6 list-disc space-y-1 text-(--texto) leading-relaxed">
-                {section.listKeys.map((key) => (
-                  <li key={key} dangerouslySetInnerHTML={html(key)} />
-                ))}
-              </ul>
-            ) : null}
-          </>
-        )}
-      </section>
-    );
-  };
-
-  const renderLinksSection = (section: ProjectSection, projectTitle: string) => (
-    <div className="my-4 flex flex-wrap gap-3" key={`${projectTitle}-links-${section.links?.[0]?.href ?? "group"}`}>
-      {section.links?.map((link) => (
-        <a
-          key={link.href}
-          href={link.href}
-          target={link.href.startsWith("mailto:") ? undefined : "_blank"}
-          rel={link.href.startsWith("mailto:") ? undefined : "noreferrer"}
-          download={link.download}
-          className={link.className}
-        >
-          <ProjectLinkIcon icon={link.icon} /> {link.labelKey ? t(link.labelKey) : link.label}
-        </a>
+      {section.paragraphKeys?.map((key) => (
+        <p
+          key={key}
+          className="mb-2.5 leading-relaxed"
+          dangerouslySetInnerHTML={html(key)}
+        />
       ))}
-    </div>
-  );
 
-  const renderDownloadSection = (section: ProjectSection, projectTitle: string) => (
-    <div
-      className="my-8 flex flex-col items-center gap-5 rounded-xl border border-(--borda) bg-(--fundo-card) p-5 sm:flex-row"
-      key={`${projectTitle}-download`}
-    >
-      <div className="shrink-0 text-4xl text-red-500">
-        <FaFilePdf />
-      </div>
-      <div className="text-center sm:text-left">
-        <p className="mb-1 font-semibold text-(--texto)">{t(section.titleKey ?? "")}</p>
-        <p className="mb-3 text-sm text-(--texto-mutado)">{t(section.descriptionKey ?? "")}</p>
-        <a
-          href={section.href}
-          download
-          className="inline-block rounded-lg bg-[#1e66ff] px-4 py-2 text-sm font-semibold text-white transition-transform hover:-translate-y-1"
-        >
-          {t(section.headingKey ?? "")}
-        </a>
-      </div>
-    </div>
+      {section.listKeys ? (
+        <ul className="ml-6 list-disc space-y-1 text-(--texto) leading-relaxed">
+          {section.listKeys.map((key) => (
+            <li key={key} dangerouslySetInnerHTML={html(key)} />
+          ))}
+        </ul>
+      ) : null}
+    </section>
   );
 
   const renderTechSection = (section: ProjectSection, projectTitle: string) => (
@@ -187,17 +89,11 @@ export default function ProjectsSection({
   );
 
   const renderSection = (section: ProjectSection, projectTitle: string) => {
-    switch (section.type) {
-      case "links":
-        return renderLinksSection(section, projectTitle);
-      case "download":
-        return renderDownloadSection(section, projectTitle);
-      case "tech":
-        return renderTechSection(section, projectTitle);
-      case "content":
-      default:
-        return renderContentSection(section, projectTitle);
+    if (section.type === "tech") {
+      return renderTechSection(section, projectTitle);
     }
+
+    return renderContentSection(section, projectTitle);
   };
 
   return (

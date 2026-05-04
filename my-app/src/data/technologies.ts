@@ -3,7 +3,6 @@ export interface TechnologyItem {
   icon: string;
   label: string;
   labelKey?: string;
-  iconType?: "class" | "custom";
 }
 
 export interface TechnologyGroup {

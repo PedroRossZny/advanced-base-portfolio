@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Cpu, Laptop } from "lucide-react";
+import { Laptop } from "lucide-react";
 import { useLanguage } from "@/components/LanguageProvider";
 import { technologyGroups, type TechnologyItem } from "@/data/technologies";
 
@@ -11,15 +11,6 @@ interface TechSectionProps {
 }
 
 function TechnologyIcon({ technology }: { technology: TechnologyItem }) {
-  if (technology.iconType === "custom") {
-    switch (technology.icon) {
-      case "iot":
-        return <Cpu size={18} className="shrink-0" />;
-      default:
-        return null;
-    }
-  }
-
   return <i className={`${technology.icon} text-lg`} />;
 }
 
