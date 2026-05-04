@@ -68,7 +68,9 @@ export default function ProjectsSection({
       <div
         className={[
           technologyGridClassName,
-          section.fillLastRow ? "[&>*:last-child]:col-span-full" : "",
+          section.fillLastRow && (section.techGroups?.length ?? 0) % 2 === 1
+            ? "[&>*:last-child]:col-span-full"
+            : "",
         ].join(" ")}
       >
         {section.techGroups?.map((group) => (
