@@ -11,12 +11,12 @@ export default function Footer() {
       <p className="m-0 text-center leading-relaxed">
         <span>{t("por")}</span>
         <a
-          href="https://github.com/PedroRossZny"
+          href="#"
           target="_blank"
           rel="nofollow"
           className="ml-1 text-(--destaque) no-underline transition-all hover:underline"
         >
-          Pedro Ross
+          XXXXX XXXX
         </a>{" "}
         &copy; {year}
       </p>

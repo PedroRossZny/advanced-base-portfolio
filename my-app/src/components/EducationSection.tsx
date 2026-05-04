@@ -28,8 +28,8 @@ export default function EducationSection() {
           transition={{ duration: 0.5 }}
           className="rounded-lg border-l-[5px] border-(--destaque) bg-(--fundo-principal) px-5 py-4 shadow-sm transition-shadow duration-300 hover:shadow-md"
         >
-          <p className="mb-1 text-sm font-semibold text-(--texto-mutado)">2023 - 2026</p>
-          <h3 className="text-lg font-poppins font-bold text-(--texto)">UNIFRAN</h3>
+          <p className="mb-1 text-sm font-semibold text-(--texto-mutado)">XXXX - XXXX</p>
+          <h3 className="text-lg font-poppins font-bold text-(--texto)">XXXXXXX</h3>
           <p className="text-(--texto-mutado)">{t("curso")}</p>
         </motion.div>
       </div>

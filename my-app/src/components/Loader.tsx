@@ -37,7 +37,7 @@ export default function Loader() {
             {/* Foto Central */}
             <div className="absolute w-32.5 h-32.5 rounded-full border-4 border-(--fundo-card) shadow-[0_0_20px_rgba(0,0,0,0.3)] z-20 overflow-hidden">
               <Image 
-                src="/images/pedro.jpg" 
+                src="/images/default-avatar.jpg" 
                 alt="Carregando..." 
                 fill 
                 className="object-cover"
